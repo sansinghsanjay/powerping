@@ -1,4 +1,4 @@
-# modules
+# modules import
 from modules.notification_module import show_notification
 from modules.sound_module import play_notification_sound
 
@@ -10,5 +10,5 @@ def main() -> None:
     play_notification_sound()
 
 if __name__ == "__main__":
+    # run main function
     main()
-

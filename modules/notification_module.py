@@ -10,9 +10,9 @@ def show_notification():
         app_id="PowerPing",
         title="Battery Alert",
         msg="Your laptop battery is almost full. Please unplug the charger.",
-        duration="short",
+        duration="long",
     )
     # Add button - launches powerping://stop so the main app can stop the sound
-    toast.add_actions(label="Okay", launch="powerping://stop")
-    toast.set_audio()
+    #toast.add_actions(label="Dismiss", launch="stop_sound")
     toast.show()
+

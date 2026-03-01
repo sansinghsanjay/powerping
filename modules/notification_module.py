@@ -1,28 +1,18 @@
-import time
+# python-packages
+from winotify import Notification
 
-from winotify import Notification, audio
-
-
+# function to show notification
 def show_notification():
     """
     Show a Windows notification near the bottom-right with a button.
     """
     toast = Notification(
-        app_id="Python App",
-        title="Hello!",
-        msg="This is a Windows 11 notification.",
+        app_id="PowerPing",
+        title="Battery Alert",
+        msg="Your laptop battery is almost full. Please unplug the charger.",
         duration="short",
     )
-
-    # Add button
-    toast.add_actions(label="Okay", launch="close")
-
-    toast.set_audio(audio.Default, loop=False)
-
+    # Add button - launches powerping://stop so the main app can stop the sound
+    toast.add_actions(label="Okay", launch="powerping://stop")
+    toast.set_audio()
     toast.show()
-
-
-if __name__ == "__main__":
-    # Simple manual test: wait 3 seconds, then show the notification.
-    time.sleep(3)
-    show_notification()

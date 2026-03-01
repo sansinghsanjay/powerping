@@ -1,5 +1,8 @@
 # python imports
 import time
+import logging
+import traceback
+from datetime import datetime
 
 # modules import
 from modules.battery_module import battery_status
@@ -8,6 +11,13 @@ from modules.sound_module import play_notification_sound
 
 # util imports
 from utils.load_config import load_config
+
+# Configure logging
+logging.basicConfig(
+    filename="powerping_startup.log",   # Log file name
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+)
 
 # main function
 def main() -> None:
@@ -33,5 +43,12 @@ def main() -> None:
         time.sleep(sleep_time)
 
 if __name__ == "__main__":
-    # run main function
-    main()
+    logging.info("Application starting...")
+    try:
+        # run main function
+        main()
+        logging.info("Application finished successfully.")
+    except Exception as e:
+        logging.error("Unhandled exception occurred!")
+        logging.error(str(e))
+        logging.error(traceback.format_exc())

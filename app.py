@@ -1,13 +1,36 @@
+# python imports
+import time
+
 # modules import
+from modules.battery_module import battery_status
 from modules.notification_module import show_notification
 from modules.sound_module import play_notification_sound
 
+# util imports
+from utils.load_config import load_config
+
 # main function
 def main() -> None:
-    # show notification
-    show_notification()
-    # play notification sound
-    play_notification_sound()
+    # load config
+    config = load_config()
+    battery_percentage = 87
+    while(True):
+        # get battery status
+        is_battery_charging, battery_percentage = battery_status(battery_percentage)
+        # check if battery is charging and battery percentage is greater than or equal to threshold
+        if is_battery_charging and battery_percentage >= config["threshold"]:
+            # show notification
+            show_notification()
+            # play notification sound
+            play_notification_sound()
+            # break the loop
+            break
+        # sleep
+        sleep_time = config["threshold"] - battery_percentage
+        if sleep_time <= 0:
+            sleep_time = 1
+        sleep_time = (sleep_time * 60) / 2
+        time.sleep(sleep_time)
 
 if __name__ == "__main__":
     # run main function

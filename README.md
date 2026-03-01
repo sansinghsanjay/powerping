@@ -71,10 +71,10 @@ There are multiple ways to run PowerPing automatically after boot:
   - Create a new Task:
     - **Trigger**: At log on (or at startup).
     - **Action**: Start a program → `python.exe`
-    - **Arguments**: `C:\path\to\PowerPing\powerping.py`
+    - **Arguments**: `C:\path\to\PowerPing\app.py`
     - **Start in**: `C:\path\to\PowerPing\`
   - Enable "Run whether user is logged on or not" if desired.
-- **Alternative**: Add a shortcut to `powerping.py` (or a `.bat` wrapper) in the **Startup** folder.
+- **Alternative**: Add a shortcut to `app.py` (or a `.bat` wrapper) in the **Startup** folder.
 
 > Exact step‑by‑step instructions can be refined once the script structure is finalized.
 
@@ -87,45 +87,45 @@ Configuration options will be exposed via a simple config file (e.g. `config.jso
 - **Battery threshold**:  
   - Default: `98`  
   - Description: Percentage at which to trigger notification and sound.  
-- **Check interval (seconds)**:  
-  - How often PowerPing polls battery status.  
-- **Reminder interval (minutes)**:  
-  - Minimum time between repeated notifications once the threshold is reached.  
 - **Sound file path**:  
-  - Custom path to a `.wav` or `.mp3` file to play.  
-- **Enable/disable sound**:  
-  - Turn the audio alert on or off while keeping notifications.
+  - Custom path to a `.wav` or `.mp3` file to play.
 
 Example configuration file:
 
 ```json
 {
   "threshold": 98,
-  "check_interval_seconds": 30,
-  "reminder_interval_minutes": 10,
-  "sound_enabled": true,
   "sound_file": "assets/alert.wav"
 }
 ```
 
 ---
 
-## Architecture (Planned)
+## Architecture & File Structure
 
-- **`powerping.py`**  
-  - Entry point. Parses configuration, initializes logger, and starts the monitor loop.
-- **Battery monitor module**  
-  - Uses `psutil` (or equivalent) to read battery status and percentage.
-- **Notification module**  
-  - Wraps Windows toast notifications for consistent UX.
-- **Sound module**  
-  - Plays a configured audio file when triggered.
-- **Scheduler/loop**  
-  - A simple time‑based loop that:
-    - Reads battery data.
-    - Compares against threshold.
-    - Applies reminder interval logic.
-    - Triggers notifications and/or sound.
+The current implementation mirrors the originally planned design. Key files and modules in the repository are:
+
+- **`app.py`**
+  - Main entry point. Loads configuration, initializes components, and starts the monitor loop.
+- **`config.json`**
+  - Default configuration file shipped with the project. See the **Configuration** section below for format.
+- **`modules/battery_module.py`**
+  - Encapsulates battery status access using `psutil`.
+- **`modules/notification_module.py`**
+  - Handles Windows toast notifications via `win10toast` or similar.
+- **`modules/sound_module.py`**
+  - Plays alert sounds (configurable file path).
+- **`utils/load_config.py`**
+  - Helper for reading and validating the JSON configuration.
+
+The monitoring loop in `app.py`:
+
+1. Reads battery percentage and charging state from `battery_module`.
+2. Compares against the configured threshold.
+3. Enforces the reminder interval to avoid repeated alerts.
+4. Dispatches a notification (and optional sound) via the notification and sound modules.
+
+This structure keeps concerns separated and makes the code easier to maintain or extend.
 
 ---
 

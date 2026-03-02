@@ -6,7 +6,7 @@ from datetime import datetime
 
 # modules import
 from modules.battery_module import battery_status
-from modules.notification_module import show_notification
+from modules.notification_module import show_app_started_notification, show_battery_full_notification
 from modules.sound_module import play_notification_sound
 
 # util imports
@@ -21,16 +21,17 @@ logging.basicConfig(
 
 # main function
 def main() -> None:
+    # Show startup notification
+    show_app_started_notification()
     # load config
     config = load_config()
-    battery_percentage = 87
     while(True):
         # get battery status
         is_battery_charging, battery_percentage = battery_status(battery_percentage)
         # check if battery is charging and battery percentage is greater than or equal to threshold
         if is_battery_charging and battery_percentage >= config["threshold"]:
             # show notification
-            show_notification()
+            show_battery_full_notification()
             # play notification sound
             play_notification_sound()
             # break the loop

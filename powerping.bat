@@ -1,0 +1,1 @@
+python "C:/Users/Sanjay Singh/Documents/startup_apps/powerping/app.py"

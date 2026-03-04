@@ -2,7 +2,6 @@
 import time
 import logging
 import traceback
-from datetime import datetime
 
 # modules import
 from modules.battery_module import battery_status
@@ -26,6 +25,7 @@ def main() -> None:
     time.sleep(10)
     # load config
     config = load_config()
+    logging.info(f"Configuration loaded: {config}")
     while(True):
         # get battery status
         is_battery_charging, battery_percentage = battery_status()

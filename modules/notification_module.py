@@ -26,6 +26,5 @@ def show_battery_full_notification():
         duration="long",
     )
     # Add button - launches powerping://stop so the main app can stop the sound
-    #toast.add_actions(label="Dismiss", launch="stop_sound")
+    toast.add_actions(label="Dismiss", launch="stop_sound")
     toast.show()
-

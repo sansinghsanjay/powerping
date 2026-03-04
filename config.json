@@ -1,4 +1,4 @@
 {
-  "threshold": 98,
+  "threshold": 39,
   "sound_file": "./assets/battery_full.mp3"
 }

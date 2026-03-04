@@ -23,11 +23,12 @@ logging.basicConfig(
 def main() -> None:
     # Show startup notification
     show_app_started_notification()
+    time.sleep(10)
     # load config
     config = load_config()
     while(True):
         # get battery status
-        is_battery_charging, battery_percentage = battery_status(battery_percentage)
+        is_battery_charging, battery_percentage = battery_status()
         # check if battery is charging and battery percentage is greater than or equal to threshold
         if is_battery_charging and battery_percentage >= config["threshold"]:
             # show notification

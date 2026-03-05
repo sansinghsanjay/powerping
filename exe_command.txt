@@ -1,1 +1,1 @@
-pyinstaller --onefile --noconsole app_exe.py
+pyinstaller --onefile --noconsole app.py

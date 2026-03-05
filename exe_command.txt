@@ -1,3 +1,6 @@
+pyinstaller --onefile --noconsole app_exe.py
+
+
 pyinstaller --onefile --noconsole --add-data "config.json;." --add-data "assets/*;assets" --add-data "modules/*;modules" --add-data "utils/*;utils" app.py
 
 
